@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sergaytrain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(30%) blur(2px);
+        }
+        
+        .discordcard {
+            background: rgba(40, 42, 46, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            width: 320px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .discordcard:hover {
+            transform: translateY(-5px);
+        }
+        
+        .avatar {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #5865F2;
+        }
+        
+        .avatar::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 25px;
+            height: 25px;
+            background-color: #3ba55c;
+            border-radius: 50%;
+            border: 3px solid #2f3136;
+        }
+        
+        .username h2 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 22px;
+        }
+        
+        .status {
+            color: #b9bbbe;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .status::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: #3ba55c;
+            border-radius: 50%;
+        }
+
+        .nowplay {
+            color: #fff;
+            background: rgba(88, 101, 242, 0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nowplay.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nowplay::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: #5865F2;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            background: rgba(88, 101, 242, 0.7);
+            transform: scale(1.1);
+        }
+
+        .music-wave {
+            display: inline-block;
+            margin-left: 8px;
+            position: relative;
+            height: 15px;
+            width: 20px;
+        }
+
+        .music-wave span {
+            position: absolute;
+            bottom: 0;
+            width: 3px;
+            height: 100%;
+            background: #5865F2;
+            animation: musicWave 1.5s ease infinite;
+        }
+
+        .music-wave span:nth-child(1) {
+            left: 0;
+            animation-delay: 0.2s;
+        }
+
+        .music-wave span:nth-child(2) {
+            left: 5px;
+            animation-delay: 0.4s;
+        }
+
+        .music-wave span:nth-child(3) {
+            left: 10px;
+            animation-delay: 0.6s;
+        }
+
+        .music-wave span:nth-child(4) {
+            left: 15px;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes musicWave {
+            0%, 100% {
+                height: 30%;
+            }
+            50% {
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <img src="https://i.ytimg.com/vi/7f6HwVERH78/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCaHe5olQ5xrlpE1-bSaNorVGxxGg" alt="Deepseek background">
+    </div>
+    
+    <div class="discordcard">
+        <div class="avatar">
+            <img src="29eaf262ad988aab090e1a70fb561510.webp" alt="sergaytrain avatar">
+        </div>
+        <div class="username">
+            <h2>sergaytrain</h2>
+        </div>
+        <div class="status">
+            Online
+        </div>
+        <div class="nowplay" id="nowPlaying">
+            <span id="songTitle">MVP - Fimiguerroro russia</span>
+            <div class="music-wave">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Аудио элемент (скрытый) -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
+
+    <!-- Кнопка управления музыкой -->
+    <div class="music-control" id="musicToggle">🔊</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const music = document.getElementById('bgMusic');
+            const toggleBtn = document.getElementById('musicToggle');
+            const nowPlaying = document.getElementById('nowPlaying');
+            
+            // Отключение правой кнопки мыши
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            }, false);
+            
+            // Попытка автоматического воспроизведения
+            function attemptPlay() {
+                music.volume = 0.3; // Установка комфортной громкости
+                const playPromise = music.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Музыка начала играть
+                        nowPlaying.classList.add('active');
+                    }).catch(error => {
+                        // Автовоспроизведение заблокировано
+                        toggleBtn.textContent = '🔇';
+                        toggleBtn.style.display = 'block';
+                    });
+                }
+            }
+            
+            // Первая попытка воспроизведения
+            attemptPlay();
+            
+            // Обработчик для кнопки включения/выключения
+            toggleBtn.addEventListener('click', function() {
+                if (music.paused) {
+                    music.play();
+                    toggleBtn.textContent = '🔊';
+                    nowPlaying.classList.add('active');
+                } else {
+                    music.pause();
+                    toggleBtn.textContent = '🔇';
+                    nowPlaying.classList.remove('active');
+                }
+            });
+            
+            // Показываем кнопку при любом взаимодействии с сайтом
+            document.body.addEventListener('click', function() {
+                toggleBtn.style.display = 'block';
+                // Повторная попытка воспроизведения при взаимодействии
+                if (music.paused) attemptPlay();
+            });
+
+            // Анимация волны музыки
+            const musicWave = document.querySelector('.music-wave');
+            music.addEventListener('play', function() {
+                musicWave.style.display = 'inline-block';
+            });
+            music.addEventListener('pause', function() {
+                musicWave.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

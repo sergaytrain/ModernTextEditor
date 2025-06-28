@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Text Editor - Лучший текстовый редактор</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --bg-color: #f8f9fa;
+            --text-color: #1a1a2e;
+            --nav-bg: white;
+            --card-bg: white;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark-mode {
+            --primary: #4cc9f0;
+            --primary-dark: #4895ef;
+            --dark: #f8f9fa;
+            --light: #1a1a2e;
+            --gray: #adb5bd;
+            --bg-color: #121212;
+            --text-color: #f8f9fa;
+            --nav-bg: #1a1a2e;
+            --card-bg: #242424;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--nav-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav a:hover {
+            color: var(--primary);
+        }
+        
+        .nav a#active {
+            color: var(--primary);
+        }
+        
+        .nav a#active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark-mode .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            background: linear-gradient(135deg, var(--light) 0%, var(--card-bg) 100%);
+        }
+        
+        .main h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .main p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--gray);
+            max-width: 600px;
+        }
+        
+        button {
+            padding: 0.75rem 2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .whyme, .aboutthedeveloper {
+            padding: 5rem 5%;
+            background-color: var(--bg-color);
+        }
+        
+        .whyme {
+            text-align: center;
+        }
+        
+        .whyme h1, .aboutthedeveloper h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+            text-align: center;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .aboutthedeveloper {
+            background-color: var(--light);
+            text-align: center;
+        }
+        
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem 5%;
+        }
+        
+        .footer h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer p {
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .main h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <h1>Modern Text Editor</h1>
+        </div>
+        <div class="nav">
+            <a id="active" href="#main">Главная</a>
+            <a href="#whyme">Почему мы?</a>
+            <a href="#aboutthedeveloper">О разработчике</a>
+            <button class="theme-toggle" id="themeToggle">🌓</button>
+        </div>
+    </div>
+    
+    <div class="main" id="main">
+        <h1>Modern Text Editor</h1>
+        <p>Инновационный текстовый редактор, созданный в РФ с любовью к деталям и вниманием к потребностям пользователей.</p>
+        <a href="ModerText.rar"><button>Скачать бесплатно</button></a>
+    </div>
+    
+    <div class="whyme" id="whyme">
+        <h1>Почему стоит выбрать нас?</h1>
+        <div class="features">
+            <div class="feature">
+                <h3>Быстрота работы</h3>
+                <p>Оптимизированный движок обеспечивает мгновенную реакцию на действия пользователя даже с большими файлами.</p>
+            </div>
+            <div class="feature">
+                <h3>Современный интерфейс</h3>
+                <p>Чистый, интуитивно понятный дизайн с поддержкой темной темы и настраиваемым интерфейсом.</p>
+            </div>
+            <div class="feature">
+                <h3>Безопасность данных</h3>
+                <p>Все ваши документы хранятся локально, мы не собираем и не анализируем ваши данные.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="aboutthedeveloper" id="aboutthedeveloper">
+        <h2>О разработчике</h2>
+        <p>Создано одним энтузиастом с целью предоставить качественный инструмент для работы с текстом.</p>
+        <a href="developer.html"><button>Узнать больше</button></a>
+    </div>
+    
+    <div class="footer">
+        <h2>Создано в России. С любовью и душой.</h2>
+        <p>Modern Text Editor</p>
+        <p id="copyright">© Modern Text editor <span id="current-year"></span>.</p>
+    </div>
+
+    <script>
+        // Автоматическое обновление года в футере
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Проверяем сохранённую тему в localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = '🌞';
+        } else {
+            themeToggle.textContent = '🌜';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            // Сохраняем выбор темы
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '🌞';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌜';
+            }
+        });
+        
+        // Плавная прокрутка к разделам
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Удаляем активный класс у всех ссылок
+                document.querySelectorAll('.nav a').forEach(link => {
+                    link.classList.remove('active');
+                    link.id = '';
+                });
+                
+                // Добавляем активный класс к текущей ссылке
+                this.id = 'active';
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Обновление активного пункта меню при прокрутке
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('div[id]');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    currentSection = '#' + section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.nav a').forEach(link => {
+                link.classList.remove('active');
+                link.id = '';
+                if (link.getAttribute('href') === currentSection) {
+                    link.id = 'active';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
